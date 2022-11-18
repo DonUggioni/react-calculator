@@ -19,17 +19,17 @@
 }
 
 .highlight {
-  background-color: rgb(218, 141, 0);
+  background-color: var(--highLightOrange);
 }
 
 .highlight:hover {
-  background-color: rgb(216, 156, 44);
+  background-color: var(--highLightOrangeHover);
 }
 
-.hightlight_equal {
-  background-color: rgb(255, 42, 42);
+.highlight_equal {
+  background-color: var(--highLightRed);
 }
 
-.hightlight_equal:hover {
-  background-color: rgb(255, 78, 78);
+.highlight_equal:hover {
+  background-color: var(--highLightRedHover);
 }

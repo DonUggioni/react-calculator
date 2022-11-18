@@ -1,9 +1,13 @@
 import Wrapper from './components/wrapper/Wrapper';
 
+import { CalculatorProvider } from './store/calculator-context';
+
 function App() {
   return (
     <main className="App">
-      <Wrapper />
+      <CalculatorProvider>
+        <Wrapper />
+      </CalculatorProvider>
     </main>
   );
 }

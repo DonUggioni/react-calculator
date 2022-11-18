@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../Button/Button';
+import { CalcContext } from '../../store/calculator-context';
 
 import './ButtonsBox.css';
 
 function ButtonsBox() {
+  const calcCtx = useContext(CalcContext);
+
+  function numberInputHandler(n) {
+    calcCtx.setNum([...calcCtx.numbers, n]);
+
+    if (n === '+' || n === '-' || n === '÷' || n === 'X') {
+      calcCtx.setCalcHistory([
+        ...calcCtx.calcHistory,
+        calcCtx.numbers.join('') + n,
+      ]);
+      calcCtx.setSymbol(n);
+      calcCtx.setNum([]);
+    }
+  }
+
   const btnValues = [
     ['C', '⌫', '%', '÷'],
     [7, 8, 9, 'X'],
@@ -26,14 +42,10 @@ function ButtonsBox() {
     }
 
     if (symbol === '=') {
-      return 'button hightlight_equal span-2';
+      return 'button highlight_equal span-2';
     } else {
       return 'button';
     }
-  }
-
-  function clicked(value) {
-    console.log(value, 'clicked');
   }
 
   return (
@@ -44,7 +56,7 @@ function ButtonsBox() {
             symbol={btn}
             span={btn === '=' ? 'button span-2' : 'button'}
             key={i}
-            onClick={() => clicked(btn)}
+            onClick={() => numberInputHandler(btn)}
             className={addClasses(btn)}
           />
         );
