@@ -1,0 +1,8 @@
+.wrapper {
+  max-width: 35rem;
+  width: 95vw;
+  background-color: var(--bodyBackground);
+  opacity: 0.9;
+  border-radius: 5px;
+  padding: 1.2rem;
+}

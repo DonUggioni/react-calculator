@@ -1,0 +1,35 @@
+.button {
+  border: none;
+  border-radius: 5px;
+  color: var(--textColor);
+  background-color: var(--buttonColor);
+  font-family: inherit;
+  padding: 1.6rem 2.4rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-size: inherit;
+}
+
+.button:hover {
+  background-color: var(--buttonColorHover);
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.highlight {
+  background-color: rgb(218, 141, 0);
+}
+
+.highlight:hover {
+  background-color: rgb(216, 156, 44);
+}
+
+.hightlight_equal {
+  background-color: rgb(255, 42, 42);
+}
+
+.hightlight_equal:hover {
+  background-color: rgb(255, 78, 78);
+}
