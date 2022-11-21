@@ -4,15 +4,13 @@ import { CalcContext } from '../../store/calculator-context';
 import './Screen.css';
 
 function Screen() {
-  const calcCtx = useContext(CalcContext);
+  const ctx = useContext(CalcContext);
   return (
     <div className="screen">
       <span className="calc_history">
-        {calcCtx.calcHistory.length === 0 ? 0 : calcCtx.numbers}
+        {!ctx.calc.res ? 0 : ctx.calc.res + ctx.calc.symbol}
       </span>
-      <span className="calc">
-        {calcCtx.numbers.length === 0 ? 0 : calcCtx.numbers}
-      </span>
+      <span className="calc">{ctx.calc.num ? ctx.calc.num : ctx.calc.res}</span>
     </div>
   );
 }
