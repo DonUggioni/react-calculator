@@ -41,6 +41,7 @@ function ButtonsBox() {
   // Keyboard functionality
   const handleKeyPress = useCallback(
     (event) => {
+      console.log(event.key);
       if (numbers.includes(event.key) && ctx.calc.num.toString().length < 16) {
         ctx.setCalc({
           ...ctx.calc,
