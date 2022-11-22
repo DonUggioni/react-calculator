@@ -10,6 +10,12 @@ html {
   font-size: 62.5%;
 }
 
+@media screen and (max-width: 540px) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   height: 100vh;
   display: flex;

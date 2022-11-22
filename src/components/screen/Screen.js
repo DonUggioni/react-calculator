@@ -8,9 +8,13 @@ function Screen() {
   return (
     <div className="screen">
       <span className="calc_history">
-        {!ctx.calc.res ? 0 : ctx.calc.res + ctx.calc.symbol}
+        {!ctx.calc.res ? 0 : ctx.calc.res.toLocaleString() + ctx.calc.symbol}
       </span>
-      <span className="calc">{ctx.calc.num ? ctx.calc.num : ctx.calc.res}</span>
+      <span className="calc">
+        {ctx.calc.num
+          ? ctx.calc.num.toLocaleString()
+          : ctx.calc.res.toLocaleString()}
+      </span>
     </div>
   );
 }
