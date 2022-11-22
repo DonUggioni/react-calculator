@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import Button from '../Button/Button';
 import { CalcContext } from '../../store/calculator-context';
 
 import './ButtonsBox.css';
 
+const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const operations = ['+', '-', '*', '/'];
+
 function ButtonsBox() {
   const ctx = useContext(CalcContext);
-  console.log(ctx.calc);
-  console.log(ctx.calc.res);
-  console.log(ctx.calc.num.toString().length);
 
   const btnValues = [
     ['C', '⌫', '%', '÷'],
@@ -38,11 +38,67 @@ function ButtonsBox() {
     }
   }
 
+  // Keyboard functionality
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (numbers.includes(event.key) && ctx.calc.num.toString().length < 16) {
+        ctx.setCalc({
+          ...ctx.calc,
+          num:
+            ctx.calc.num === 0 && event.key === '0'
+              ? '0'
+              : ctx.calc.num % 1 === 0
+              ? Number(ctx.calc.num + event.key)
+              : ctx.calc.num + event.key,
+          res: !ctx.calc.symbol ? 0 : ctx.calc.res,
+        });
+      }
+
+      if (operations.includes(event.key)) {
+        ctx.setCalc({
+          ...ctx.calc,
+          symbol: event.key === '*' ? 'X' : event.key === '/' ? '÷' : event.key,
+          num: '0',
+          res: !ctx.calc.res && ctx.calc.num ? ctx.calc.num : ctx.calc.res,
+        });
+      }
+
+      if (event.key === 'Escape') {
+        resetClickHandler();
+      }
+
+      if (event.key === 'Enter') {
+        equalsClickHandler();
+      }
+
+      if (event.key === 'Backspace') {
+        deleteLastClickHandler();
+      }
+
+      if (event.key === '.') {
+        decimalClickHandler();
+      }
+
+      if (event.key === '%') {
+        percentClickHandler();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ctx]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   function numClickHandler(e) {
     const value = e.target.innerHTML;
-    console.log(value);
 
-    if (ctx.calc.num.toString().length + '' < 16) {
+    if (ctx.calc.num.toString().length < 16) {
       ctx.setCalc({
         ...ctx.calc,
         num:
@@ -112,9 +168,13 @@ function ButtonsBox() {
     });
   }
 
-  function clearLastClickHandler() {
+  function deleteLastClickHandler() {
     ctx.setCalc({
-      num: ctx.calc.num.toString().slice(0, -1),
+      ...ctx.calc,
+      num:
+        ctx.calc.num.toString().length === 0
+          ? '0'
+          : ctx.calc.num.toString().slice(0, -1),
     });
   }
 
@@ -138,7 +198,7 @@ function ButtonsBox() {
               btn === 'C'
                 ? resetClickHandler
                 : btn === '⌫'
-                ? clearLastClickHandler
+                ? deleteLastClickHandler
                 : btn === '%'
                 ? percentClickHandler
                 : btn === '='
